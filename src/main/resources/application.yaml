@@ -1,1 +1,7 @@
-spring.application.name=project
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dc
+    username: postgres
+    password: 7gex8y
+  elasticsearch:
+    uris: http://elasticsearch:9200
