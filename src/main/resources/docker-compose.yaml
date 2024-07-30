@@ -1,18 +1,28 @@
-version: "1"
+version: '3'
+
 services:
-  db:
-    image: postgres:12
+
+  postgres:
+    image: postgres:13
     environment:
-      POSTGRES_DB: dc
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 7gex8y
+    ports:
+      - "5432:5432"
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+
   elasticsearch:
-    image: elasticsearch:7.9.2
+    image: elasticsearch:8.14.3
     environment:
       - xpack.security.enabled=false
-      - "discovery.type=single-node"
+      - discovery.type=single-node
     ports:
       - "9200:9200"
-      - "9300:9300"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+volumes:
+  postgres-data:
+  elasticsearch-data:

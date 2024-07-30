@@ -1,7 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/dc
+    url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: 7gex8y
   elasticsearch:
+    host: localhost
+    port: 9200
     uris: http://elasticsearch:9200

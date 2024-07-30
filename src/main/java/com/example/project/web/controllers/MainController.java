@@ -1,38 +1,33 @@
 package com.example.project.web.controllers;
 
 import com.example.project.models.Product;
-import com.example.project.models.Sku;
-import com.example.project.services.ProductService;
-import com.example.project.services.SkuService;
+import com.example.project.services.ElasticsearchService;
+import com.example.project.services.impl.ElasticsearchServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/DC/home")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MainController {
 
-    private final ProductService productService;
-
-    private final SkuService skuService;
+    private final ElasticsearchService elasticsearchService;
 
     @GetMapping
-    public ResponseEntity<List<?>> home(){
-        List<Product> products = productService.loadDataToElasticsearch();
-        List<Sku> skus = skuService.findAll();
-        return ResponseEntity.ok(Arrays.asList(products, skus));
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Product> home(){
+        return elasticsearchService.createClient();
     }
 
     @PostMapping
-    public List<Product> findProduct(String name){
-        return productService.findByName(name);
+    @CrossOrigin(origins = "http://localhost:3000")
+    public List<Product> findProduct(@RequestParam(name = "active") String active, @RequestParam(name = "size") String size){
+        return elasticsearchService.findProduct(active, size);
     }
+
+
 
 }
